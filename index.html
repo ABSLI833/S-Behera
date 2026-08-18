@@ -1357,40 +1357,204 @@ Choose a service and get a personalized financial plan designed for your goals.
 </div>
 
 <script>
-let service="";
+
+let service = "";
+
+
+/* =========================
+   SERVICE POPUP
+========================= */
 
 function openForm(s){
-service=s;
-document.getElementById("popupForm").style.display="flex";
 
-if(s==="Child"){
-document.getElementById("childFields").style.display="block";
-}else{
-document.getElementById("childFields").style.display="none";
+    service = s;
+
+    document.getElementById("popupForm").style.display = "flex";
+
+    if(s === "Child"){
+
+        document.getElementById("childFields").style.display = "block";
+
+    }else{
+
+        document.getElementById("childFields").style.display = "none";
+
+    }
 }
-}
+
+
+/* =========================
+   CLOSE SERVICE POPUP
+========================= */
 
 function closeForm(){
-document.getElementById("popupForm").style.display="none";
+
+    document.getElementById("popupForm").style.display = "none";
+
 }
+
+
+/* =========================
+   SERVICE POPUP → WHATSAPP
+========================= */
+
+function sendWhatsApp(){
+
+    let name = document.getElementById("name").value.trim();
+
+    let phone = document.getElementById("phone").value.trim();
+
+    let age = document.getElementById("age").value.trim();
+
+    let income = document.getElementById("income").value.trim();
+
+
+    /* REQUIRED FIELDS */
+
+    if(name === "" || phone === ""){
+
+        alert("Please enter your Name and WhatsApp Number.");
+
+        return;
+
+    }
+
+
+    /* BASIC PHONE VALIDATION */
+
+    if(phone.length < 10){
+
+        alert("Please enter a valid WhatsApp Number.");
+
+        return;
+
+    }
+
+
+    /* CREATE WHATSAPP MESSAGE */
+
+    let whatsappMessage =
+`📋 *New Financial Consultation Request*
+
+👤 Name: ${name}
+
+📞 WhatsApp Number: ${phone}
+
+🎯 Service: ${service}
+
+🎂 Age: ${age}
+
+💰 Monthly Income: ${income}`;
+
+
+    /* CHILD EDUCATION EXTRA DETAILS */
+
+    if(service === "Child"){
+
+        let childName =
+            document.getElementById("childName").value.trim();
+
+        let childAge =
+            document.getElementById("childAge").value.trim();
+
+
+        whatsappMessage +=
+`
+
+👶 Child Name: ${childName}
+
+🎂 Child Age: ${childAge}`;
+
+    }
+
+
+    /* WEBSITE SOURCE */
+
+    whatsappMessage +=
+`
+
+------------------------
+
+Submitted from Sasmita Behera Website`;
+
+
+    /* WHATSAPP URL */
+
+    let url =
+        `https://wa.me/917735031833?text=${encodeURIComponent(whatsappMessage)}`;
+
+
+    /* OPEN WHATSAPP */
+
+    window.open(url, "_blank");
+
+
+    /* CLOSE POPUP */
+
+    closeForm();
+
+
+    /* CLEAR FORM */
+
+    document.getElementById("name").value = "";
+
+    document.getElementById("phone").value = "";
+
+    document.getElementById("age").value = "";
+
+    document.getElementById("income").value = "";
+
+
+    if(document.getElementById("childName")){
+
+        document.getElementById("childName").value = "";
+
+    }
+
+
+    if(document.getElementById("childAge")){
+
+        document.getElementById("childAge").value = "";
+
+    }
+
+}
+
+
+/* =========================
+   FINAL APPOINTMENT FORM
+========================= */
 
 function sendAppointment(){
 
-    let name=document.getElementById("app-name").value.trim();
+    let name =
+        document.getElementById("app-name").value.trim();
 
-    let phone=document.getElementById("app-phone").value.trim();
 
-    let email=document.getElementById("app-email").value.trim();
+    let phone =
+        document.getElementById("app-phone").value.trim();
 
-    let message=document.getElementById("app-msg").value.trim();
 
-    if(name==="" || phone===""){
+    let email =
+        document.getElementById("app-email").value.trim();
+
+
+    let message =
+        document.getElementById("app-msg").value.trim();
+
+
+    /* REQUIRED FIELDS */
+
+    if(name === "" || phone === ""){
 
         alert("Please enter your Name and Mobile Number.");
 
         return;
 
     }
+
+
+    /* CREATE WHATSAPP MESSAGE */
 
     let whatsappMessage =
 `📋 *New Consultation Request*
@@ -1405,21 +1569,42 @@ function sendAppointment(){
 ${message}
 
 ------------------------
+
 Submitted from Website`;
 
+
+    /* WHATSAPP URL */
+
     let url =
-`https://wa.me/917735031833?text=${encodeURIComponent(whatsappMessage)}`;
+        `https://wa.me/917735031833?text=${encodeURIComponent(whatsappMessage)}`;
 
-    window.open(url,"_blank");
 
-    alert("✅ Thank you!\n\nYour request has been submitted successfully.\n\nOur advisor will contact you within 6 hours.");
+    /* OPEN WHATSAPP */
 
-    document.getElementById("app-name").value="";
-    document.getElementById("app-phone").value="";
-    document.getElementById("app-email").value="";
-    document.getElementById("app-msg").value="";
+    window.open(url, "_blank");
+
+
+    /* SUCCESS MESSAGE */
+
+    alert(
+        "✅ Thank you!\n\n" +
+        "Your request has been submitted successfully.\n\n" +
+        "Our advisor will contact you within 6 hours."
+    );
+
+
+    /* CLEAR FORM */
+
+    document.getElementById("app-name").value = "";
+
+    document.getElementById("app-phone").value = "";
+
+    document.getElementById("app-email").value = "";
+
+    document.getElementById("app-msg").value = "";
 
 }
+
 </script>
 <!-- TESTIMONIALS -->
 <section class="testimonials">
